@@ -72,35 +72,35 @@ async function arashi(body, messageId, roomId, accountId) {
   });
   console.log(count);
   if (count >= 30) {
-    await blockMember(roomId, accountId, "絵文字");
+    await blockMember(roomId, accountId);
     return "ok";
   }
   if (body.match(/\[toall\]/g)) {
     if (!isAdmin) {
-      await blockMember(roomId, accountId, "toall");
+      await blockMember(roomId, accountId,);
     } else {
       await sendchatwork(
-        "管理者がtoallを使用しました。見逃してあげてください()",
+        "管理者がtoallを使用しました。見逃してあげてください",
         roomId
       );
     }
     return "ok";
   }
   if ((body.match(/\[To:\d+\]/g) || []).length >= 20) {
-    await blockMember(roomId, accountId, "[To:〇〇〇〇〇〇]");
+    await blockMember(roomId, accountId);
     return "ok";
   }
   if ((body.match(/\[p\D+\d+\]/g) || []).length >= 20) {
-    await blockMember(roomId, accountId, "[picon or pname or piconname:〇〇〇〇〇〇]");
+    await blockMember(roomId, accountId);
     return "ok";
   }
   if ((body.match(/\[hr\]/g) || []).length >= 35) {
-    await blockMember(roomId, accountId, "[code][hr][/code]");
+    await blockMember(roomId, accountId);
     return "ok";
   }
 
   if ((body.match(/\[preview/g) || []).length >= 5) {
-    await blockMember(roomId, accountId, "[preview]");
+    await blockMember(roomId, accountId);
     return "ok";
   }
 
@@ -108,7 +108,7 @@ async function arashi(body, messageId, roomId, accountId) {
 
   if (mojicount >= 10000) {
     if(!isAdmin) {
-    await blockmember(roomId, accountId, "文字数多量");
+    await blockmember(roomId, accountI);
     }
     return "ok";
   }
@@ -121,7 +121,7 @@ async function arashi(body, messageId, roomId, accountId) {
     }
   }
   if (zalgoCount >= 500) {
-    await blockMember(roomId, accountId, "zalgo");
+    await blockMember(roomId, accountId);
     return "ok";
   }
 

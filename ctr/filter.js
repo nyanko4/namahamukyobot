@@ -3,7 +3,7 @@ const cwdata = require("../ctr/cwdata");
 const msedit = require("../ctr/message");
 const CHATWORK_API_TOKEN = process.env.CWapitoken;
 
-async function blockMember(roomId, accountIdToBlock, ms) {
+async function blockMember(roomId, accountIdToBlock) {
   try {
     const members = await cwdata.getChatworkMembers(roomId);
 
@@ -47,9 +47,6 @@ async function blockMember(roomId, accountIdToBlock, ms) {
         `[info][title]不正利用記録[/title][piconname:${accountIdToBlock}]さんに対して、不正利用フィルターが発動しました。[/info]`,
         roomId
       );
-      await msedit.sendchatwork_hon(
-        `荒らし(${ms})\n[piconname:${accountIdToBlock}]　${accountIdToBlock}`
-      ) 
   } catch (error) {
     console.error(
       "不正利用フィルターエラー:",

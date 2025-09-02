@@ -8,9 +8,6 @@
     "axios": "latest",
     "crypto": "^1.0.1"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "scripts": {
     "start": "node app.js"
   }

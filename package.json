@@ -6,7 +6,6 @@
   "dependencies": {
     "express": "^5.1.0",
     "axios": "latest",
-    "crypto": "^1.0.12",
     "ioredis": "^5.4.0"
   },
   "scripts": {

@@ -1,14 +1,30 @@
 const supabase = require("../supabase/client");
 const { sendchatwork } = require("../ctr/message");
+const roripero = 10512700;
+const namahamu = 10686039;
 
-async function getOmikujiResult() {
-  const outcomes = [
+async function getOmikujiResult(accountId) {
+  
+  const normaloutcomes = [
     { rate: 15, result: "大吉" },
     { rate: 20, result: "中吉" },
     { rate: 30, result: "小吉" },
-    { rate: 32, result: "末吉" },
-    { rate: 3, result: "はむ吉" }
+    { rate: 31.5, result: "末吉" },
+    { rate: 3, result: "はむ吉" },
+    { rate: 0.5, result: "生ハムがなんでもしてくれる券(本人が許可したもののみ)" },
   ];
+  
+  const specialoutcomes = [
+    { rate: 15, result: "大吉" },
+    { rate: 20, result: "中吉" },
+    { rate: 30, result: "小吉" },
+    { rate: 31.9, result: "末吉" },
+    { rate: 3, result: "はむ吉" },
+    { rate: 0.1, result: "生ハムがなんでもしてくれる券(本人が許可したもののみ)" },
+  ]
+
+  const outcomes = accountId === roripero ? specialoutcomes : normaloutcomes;
+
   let random = Math.random() * 100;
   for (const { rate, result } of outcomes) {
     if (random < rate) return result;
@@ -29,7 +45,7 @@ async function omikuji(body, messageId, roomId, accountId) {
         console.error("Supabaseエラー:", error);
       }
 
-      if (data && accountId !== 10686039 && accountId !== 10512700) {
+      if (data && accountId !== namahamu && accountId !== roripero) {
           await sendchatwork(
             `[rp aid=${accountId} to=${roomId}-${messageId}] おみくじは1日1回までです。`,
             roomId
@@ -37,7 +53,7 @@ async function omikuji(body, messageId, roomId, accountId) {
           //console.log(data);
           return;
       }
-      const omikujiResult = await getOmikujiResult();
+      const omikujiResult = await getOmikujiResult(accountId);
       const { data: insertData, error: insertError } = await supabase
         .from("おみくじ")
         .upsert([

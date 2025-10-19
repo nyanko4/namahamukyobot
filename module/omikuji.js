@@ -10,11 +10,11 @@ async function getOmikujiResult() {
     { rate: 32, result: "末吉" },
     { rate: 3, result: "はむ吉" }
   ];
-        let random = Math.random() * 100;
-        for (const { rate, result } of outcomes) {
-          if (random < rate) return result;
-          random -= rate;
-          }}
+  let random = Math.random() * 100;
+  for (const { rate, result } of outcomes) {
+    if (random < rate) return result;
+    random -= rate;
+  }}
 
 //おみくじ
 async function omikuji(body, messageId, roomId, accountId) {
@@ -30,7 +30,7 @@ async function omikuji(body, messageId, roomId, accountId) {
         console.error("Supabaseエラー:", error);
       }
 
-      if (data) {
+      if (data && accountId !== 10686039 || accountId !== 10512700) {
         await sendchatwork(
           `[rp aid=${accountId} to=${roomId}-${messageId}] おみくじは1日1回までです。`,
           roomId
@@ -42,7 +42,7 @@ async function omikuji(body, messageId, roomId, accountId) {
       const omikujiResult = await getOmikujiResult();
       const { data: insertData, error: insertError } = await supabase
         .from("おみくじ")
-        .insert([
+        .upsert([
           {
             accountId: accountId,
             結果: omikujiResult,

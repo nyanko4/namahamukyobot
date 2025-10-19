@@ -1,12 +1,13 @@
 {
-  "name": "すやぁ…",
+  "name": "なまはむ教",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "app.js",
   "license": "CC-BY-4.0",
   "dependencies": {
     "express": "^5.1.0",
     "axios": "latest",
-    "crypto": "^1.0.1"
+    "crypto": "^1.0.12",
+    "ioredis": "^5.4.0",
   },
   "scripts": {
     "start": "node app.js"

@@ -29,13 +29,15 @@ async function omikuji(body, messageId, roomId, accountId) {
         console.error("Supabaseエラー:", error);
       }
 
-      if (data && accountId !== 10686039 || accountId !== 10512700) {
-        await sendchatwork(
-          `[rp aid=${accountId} to=${roomId}-${messageId}] おみくじは1日1回までです。`,
-          roomId
-        );
-        //console.log(data);
-        return;
+      if (data) {
+        if (accountId !== 10686039 || accountId !== 10512700) {
+          await sendchatwork(
+            `[rp aid=${accountId} to=${roomId}-${messageId}] おみくじは1日1回までです。`,
+            roomId
+          );
+          //console.log(data);
+          return;
+        }
       }
       const omikujiResult = await getOmikujiResult();
       const { data: insertData, error: insertError } = await supabase

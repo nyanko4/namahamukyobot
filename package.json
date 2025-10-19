@@ -5,8 +5,7 @@
   "license": "CC-BY-4.0",
   "dependencies": {
     "express": "^5.1.0",
-    "axios": "latest",
-    "sqlite3": "^5.1.7"
+    "axios": "latest"
   },
   "scripts": {
     "start": "node app.js"

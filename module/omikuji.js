@@ -1,3 +1,4 @@
+const supabase = require("../supabase/client");
 const { sendchatwork } = require("../ctr/message");
 const { sendername } = require("../ctr/cwdata");
 
@@ -9,30 +10,64 @@ async function getOmikujiResult() {
     { rate: 32, result: "末吉" },
     { rate: 3, result: "はむ吉" }
   ];
-  let random = Math.random() * 100;
-  for (const { rate, result } of outcomes) {
-    if (random < rate) return result;
-    random -= rate;
-  }
-}
+        let random = Math.random() * 100;
+        for (const { rate, result } of outcomes) {
+          if (random < rate) return result;
+          random -= rate;
+          }}
 
+//おみくじ
 async function omikuji(body, messageId, roomId, accountId) {
   if (body.match(/^おみくじ$/)) {
     try {
+      const { data, error } = await supabase
+        .from("おみくじ")
+        .select("*")
+        .eq("accountId", accountId)
+        .single();
 
+      if (error) {
+        console.error("Supabaseエラー:", error);
+      }
+
+      if (data) {
+        await sendchatwork(
+          `[rp aid=${accountId} to=${roomId}-${messageId}] おみくじは1日1回までです。`,
+          roomId
+        );
+        //console.log(data);
+        return;
+      }
       const name = await sendername(accountId, roomId);
       const omikujiResult = await getOmikujiResult();
-      
-      await sendchatwork(
-        `[rp aid=${accountId} to=${roomId}-${messageId}]\n${omikujiResult}`,
-        roomId
+      const { data: insertData, error: insertError } = await supabase
+        .from("おみくじ")
+        .insert([
+          {
+            accountId: accountId,
+            結果: omikujiResult,
+            名前: name,
+          },
+        ]);
+      console.log(insertData)
+      if (insertData === null) {
+        await sendchatwork(
+          `[rp aid=${accountId} to=${roomId}-${messageId}]\n${omikujiResult}`,
+          roomId
+        );
+      }
+      if (insertError) {
+        console.error("Supabase保存エラー:", insertError);
+      } else {
+        console.log("おみくじ結果が保存されました:", insertData);
+      }
+        } catch (error) {
+      console.error(
+        "エラー:",
+        error.response ? error.response.data : error.message
       );
-
-    } catch (error) {
-      console.error("おみくじエラー:", error.message);
     }
   }
-  return;
 }
 
 module.exports = omikuji;

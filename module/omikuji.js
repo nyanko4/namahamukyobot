@@ -1,6 +1,5 @@
 const supabase = require("../supabase/client");
 const { sendchatwork } = require("../ctr/message");
-const { sendername } = require("../ctr/cwdata");
 
 async function getOmikujiResult() {
   const outcomes = [
@@ -38,7 +37,6 @@ async function omikuji(body, messageId, roomId, accountId) {
         //console.log(data);
         return;
       }
-      const name = await sendername(accountId, roomId);
       const omikujiResult = await getOmikujiResult();
       const { data: insertData, error: insertError } = await supabase
         .from("おみくじ")
@@ -46,7 +44,6 @@ async function omikuji(body, messageId, roomId, accountId) {
           {
             accountId: accountId,
             結果: omikujiResult,
-            名前: name,
           },
         ]);
       console.log(insertData)

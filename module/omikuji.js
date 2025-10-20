@@ -2,7 +2,6 @@ const supabase = require("../supabase/client");
 const { sendchatwork } = require("../ctr/message");
 const roripero = 10512700;
 const namahamu = 10686039;
-const roukuma = 10754178;
 
 async function getOmikujiResult(accountId) {
   
@@ -24,7 +23,7 @@ async function getOmikujiResult(accountId) {
     { rate: 0.1, result: "生ハムがなんでもしてくれる券(本人が許可したもののみ)" },
   ]
 
-  const outcomes = accountId === roripero || accountId === roukuma ? specialoutcomes : normaloutcomes;
+  const outcomes = accountId === roripero ? specialoutcomes : normaloutcomes;
 
   let random = Math.random() * 100;
   for (const { rate, result } of outcomes) {
@@ -46,7 +45,7 @@ async function omikuji(body, messageId, roomId, accountId) {
         console.error("Supabaseエラー:", error);
       }
 
-      if (data && accountId !== namahamu && accountId !== roripero && accountId !== roukuma) {
+      if (data && accountId !== namahamu && accountId !== roripero) {
           await sendchatwork(
             `[rp aid=${accountId} to=${roomId}-${messageId}] おみくじは1日1回までです。`,
             roomId

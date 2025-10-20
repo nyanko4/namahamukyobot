@@ -3,7 +3,6 @@ const axios = require("axios");
 const reqcheck = require("../middleware/sign");
 const arashi = require("../module/arashi");
 const omikuji = require("../module/omikuji");
-const { readmessage } = require("../ctr/message");
 
 async function getchat(req, res) {
   const c = await reqcheck(req);
@@ -17,7 +16,6 @@ async function getchat(req, res) {
     room_id: roomId,
     message_id: messageId,
   } = req.body.webhook_event;
-  await readmessage(roomId, messageId);
   if (accountId === 10496796) {
     return res.sendStatus(200);
   }

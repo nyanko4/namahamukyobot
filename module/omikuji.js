@@ -1,7 +1,7 @@
 const supabase = require("../supabase/client");
 const { sendchatwork } = require("../ctr/message");
 const roripero = 10512700;
-const namahamu = 10686039;
+const namahamu = 10788301;
 
 async function getOmikujiResult(accountId) {
   

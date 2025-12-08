@@ -36,7 +36,7 @@ async function getOmikujiResult(accountId) {
 
 //おみくじ
 async function omikuji(body, messageId, roomId, accountId) {
-  if (body.match(/^おみくじ$/)) {
+  if (body.match(/^おみくじ$|^布瑠部由良由良八握剣異戒神将御神籤$/)) {
     try {
       const { data, error } = await supabase
         .from("おみくじ")

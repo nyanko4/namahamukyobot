@@ -110,9 +110,9 @@ async function commentRankingRealTime(body, messageId, roomId, accountId) {
 }
 
 
-async function commentRankingMinute(roomId) {
+async function commentRankingMinute() {
   try {
-    const messages = await getMessages(roomId);
+    const messages = await getMessages(CommentMeasurementRoom);
   
     const minuteCounts = {};
     for (const message of messages) {

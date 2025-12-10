@@ -1,8 +1,7 @@
 const { CronJob } = require("cron");
 const supabase = require("../supabase/client");
-const { dailyCommentRanking, commentRankingMinute, dailyComment } = require("../module/commentRanking");
+const { dailyComment } = require("../module/commentRanking");
 const { getMessages } = require("../ctr/message");
-
 
 function startTask() {
   new CronJob(
@@ -10,7 +9,7 @@ function startTask() {
     async () => {
       try {
         console.log("1分たちました");
-        await commentRankingMinute(364321548);
+        await commentRankingMinute();
       } catch (err) {
         console.error("commentRankingMinute error:", err.message);
       }
@@ -27,9 +26,7 @@ function startDailyTask() {
   async () => {
     console.log("0時になりました");
     await supabase.from("おみくじ").delete().neq("accountId", 0);
-    await dailyCommentRanking(364321548, kotya);
-    await dailyComment(364321548);
-    await getMessages(364321548);
+    await dailyComment()
   },
     null,
     true,

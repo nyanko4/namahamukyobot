@@ -1,6 +1,6 @@
 const { CronJob } = require("cron");
 const supabase = require("../supabase/client");
-const { dailyComment } = require("../module/commentRanking");
+const { dailyComment, commentRankingMinute } = require("../module/commentRanking");
 const { getMessages } = require("../ctr/message");
 
 function startTask() {

@@ -3,6 +3,7 @@ const axios = require("axios");
 const reqcheck = require("../middleware/sign");
 const arashi = require("../module/arashi");
 const omikuji = require("../module/omikuji");
+const { commentRankingRealTime } = require("../module/commentRanking");
 
 async function getchat(req, res) {
   const c = await reqcheck(req);
@@ -19,6 +20,8 @@ async function getchat(req, res) {
   if (accountId === 10496796) {
     return res.sendStatus(200);
   }
+
+  awati commentRankingRealTime(body, messageId, roomId, accountId);
   
   const handlers = [arashi, omikuji];
 

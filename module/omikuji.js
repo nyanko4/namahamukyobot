@@ -1,10 +1,16 @@
 const supabase = require("../supabase/client");
 const { sendchatwork } = require("../ctr/message");
-const user = {
-  namahamu: 10788301,
-  roripero: 10512700,
-  karasuke: 10484104,
+const USERS = {
+  namahamu: { accountId: 10788301, exception: true, special: false },
+  roripero: { accountId: 10512700, exception: true, special: true },
+  karasuke: { accountId: 10484104, exception: true, special: true },
+  roukuma: { accountId: 10754178, exception: true, special: true },
+  taikichi: { accountId: 10546423, exception: true, special: true },
 }
+
+const USER_BY_ID = Object.fromEntries(
+  Object.values(USERS).map(user => [user.accountId, user])
+);
 
 async function getOmikujiResult(accountId) {
   
@@ -26,7 +32,7 @@ async function getOmikujiResult(accountId) {
     { rate: 0.1, result: "生ハムがなんでもしてくれる券(本人が許可したもののみ)" },
   ]
   
-  const outcomes = [user.roripero, user.karasuke].includes(accountId) ? specialoutcomes : normaloutcomes;
+  const outcomes = USER_BY_ID[accountId]?.special ? specialoutcomes : normaloutcomes;
 
   let random = Math.random() * 100;
   for (const { rate, result } of outcomes) {
@@ -48,18 +54,11 @@ async function omikuji(body, messageId, roomId, accountId) {
         console.error("Supabaseエラー:", error);
       }
 
-      const isException = [
-        user.namahamu,
-        user.roripero,
-        user.karasuke,
-      ].includes(accountId);
-
-      if (data && !isException) {
+      if (data && !USER_BY_ID[accountId]?.exception) {
           await sendchatwork(
             `[rp aid=${accountId} to=${roomId}-${messageId}] おみくじは1日1回までです。`,
             roomId
           );
-          //console.log(data);
           return;
       }
       const omikujiResult = await getOmikujiResult(accountId);
@@ -71,13 +70,7 @@ async function omikuji(body, messageId, roomId, accountId) {
             結果: omikujiResult,
           },
         ]);
-      console.log(insertData)
-      if (insertData === null) {
-        await sendchatwork(
-          `[rp aid=${accountId} to=${roomId}-${messageId}]\n${omikujiResult}`,
-          roomId
-        );
-      }
+        await sendchatwork(`[rp aid=${accountId} to=${roomId}-${messageId}]\n${omikujiResult}`, roomId);
       if (insertError) {
         console.error("Supabase保存エラー:", insertError);
       } else {

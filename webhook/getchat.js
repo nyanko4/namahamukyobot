@@ -21,7 +21,7 @@ async function getchat(req, res) {
     return res.sendStatus(200);
   }
 
-  awati commentRankingRealTime(body, messageId, roomId, accountId);
+  await commentRankingRealTime(body, messageId, roomId, accountId);
   
   const handlers = [arashi, omikuji];
 

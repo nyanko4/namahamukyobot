@@ -5,7 +5,7 @@ const USERS = {
   roripero: { accountId: 10512700, exception: true, special: true },
   karasuke: { accountId: 10484104, exception: true, special: true },
   roukuma: { accountId: 10754178, exception: true, special: true },
-  taikichi: { accountId: 10546423, exception: true, special: true },
+  b: { accountId: 10898828, exception: true, special: true },
 }
 
 const USER_BY_ID = Object.fromEntries(

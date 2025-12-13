@@ -1,5 +1,5 @@
 const supabase = require("../supabase/client");
-const { sendchatwork, sendchatwork_hon, getMessages, getMessageNum } = require("../ctr/message");
+const { sendchatwork, getMessages, getMessageNum } = require("../ctr/message");
 const { isUserAdmin } = require("../ctr/cwdata");
 const CommentMeasurementRoom = 412992395;
 const sendToRoom = 412992395;
@@ -11,7 +11,7 @@ async function dailyCommentRanking(roomId, sendToRoom) {
     const messageTextWeekly = await getWeeklyNumber()
     const messageTextDaily = await getDailyTotalNumber(roomId)
     
-    await sendchatwork_hon(`${messageText}\n${messageTextWeekly}\n今日のコメント数: ${messageTextDaily}件`, sendToRoom);
+    await sendchatwork(`${messageText}\n${messageTextWeekly}\n今日のコメント数: ${messageTextDaily}件`, sendToRoom);
     
   } catch (err) {
     console.error("dailyCommentRankingError:", err.message);

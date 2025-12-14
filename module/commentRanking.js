@@ -123,6 +123,7 @@ async function commentRankingMinute() {
     const minuteCounts = {};
     for (const message of messages) {
       const id = message.account.account_id;
+      if (id === 10771967) continue;
       minuteCounts[id] = (minuteCounts[id] || 0) + 1;
     }
   

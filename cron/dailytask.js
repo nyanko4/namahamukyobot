@@ -33,7 +33,7 @@ function startDailyTask() {
     "Asia/Tokyo"
   );
   new CronJob(
-  "0 0 0 * * 1",
+  "3 0 0 * * 1",
   async () => {
     try {
       const { error } = await supabase

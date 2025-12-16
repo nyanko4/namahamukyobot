@@ -1,8 +1,8 @@
 const supabase = require("../supabase/client");
 const { sendchatwork, getMessages, getMessageNum } = require("../ctr/message");
 const { isUserAdmin } = require("../ctr/cwdata");
-const CommentMeasurementRoom = 412992395;
-const sendToRoom = 412992395;
+const CommentMeasurementRoom = 417850618;
+const sendToRoom = 417850618;
 
 async function dailyCommentRanking(roomId, sendToRoom) {
   try {

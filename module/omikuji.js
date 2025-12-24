@@ -1,12 +1,12 @@
 const supabase = require("../supabase/client");
 const { sendchatwork } = require("../ctr/message");
 const USERS = {
-  namahamu: { accountId: 10788301, exception: true, special: false },
+  namahamu: { accountId: 10918993, exception: true, special: false },
   roripero: { accountId: 10512700, exception: true, special: true },
   karasuke: { accountId: 10484104, exception: true, special: true },
   roukuma: { accountId: 10754178, exception: true, special: true },
   b: { accountId: 10898828, exception: true, special: true },
-  taikichi: { accountId: 10546423, exception: true, special: true }
+  taikichi: { accountId: 10546423, exception: true, special: true },
 }
 
 const USER_BY_ID = Object.fromEntries(
